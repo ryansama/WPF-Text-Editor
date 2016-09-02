@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="375.532" Width="569.681">
+        Title="MainWindow" Height="400" Width="600">
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Background="White">
             <MenuItem Header="_New" />
             <MenuItem Header="_Open" />
             <MenuItem Header="_Save" />
         </Menu>
-        <TextBox AcceptsReturn="True" />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <TextBox AcceptsReturn="True" FontFamily="Consolas" FontSize="15px"></TextBox>
+        </ScrollViewer>
+        
     </DockPanel>
 </Window>
