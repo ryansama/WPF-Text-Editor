@@ -52,6 +52,8 @@ namespace TextEditor
                 }
             }
 
+            TextEditorWindow.Title = "Text Editor - " + CurrentFilePath;
+
         }
 
         private void OpenCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -83,6 +85,8 @@ namespace TextEditor
             {
                 File.WriteAllText(CurrentFilePath, EditableTextBox.Text);
             }
+
+            TextEditorWindow.Title = "Text Editor - " + CurrentFilePath;
         }
 
         private void SaveCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -94,6 +98,7 @@ namespace TextEditor
         {
             CurrentFilePath = null;
             EditableTextBox.Text = String.Empty;
+            TextEditorWindow.Title = "Text Editor - (new document)";
         }
 
         private void NewCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
