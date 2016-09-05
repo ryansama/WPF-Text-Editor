@@ -5,17 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextEditor"
         mc:Ignorable="d"
-        Title="Ryan's Text Editor" Height="400" Width="600">
+        Title="Karan Text Editor" Height="400" Width="600">
     <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New"
+                        Executed="NewCmdExecuted"
+                        CanExecute="NewCmdCanExecute"/>
         <CommandBinding Command="ApplicationCommands.Open"
-                  Executed="OpenCmdExecuted"
-                  CanExecute="OpenCmdCanExecute"/>
+                        Executed="OpenCmdExecuted"
+                        CanExecute="OpenCmdCanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Save"
+                        Executed="SaveCmdExecuted"
+                        CanExecute="SaveCmdCanExecute"/>
+        
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="White">
-            <MenuItem Header="_New"/>
+            <MenuItem Header="_New" Command="ApplicationCommands.New"/>
             <MenuItem Header="_Open" Command="ApplicationCommands.Open" />
-            <MenuItem Header="_Save" />
+            <MenuItem Header="_Save" Command="ApplicationCommands.Save"/>
         </Menu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <TextBox AcceptsReturn="True" FontFamily="Consolas" FontSize="15px" Name="EditableTextBox"></TextBox>

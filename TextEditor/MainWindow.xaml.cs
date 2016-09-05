@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
 
 namespace TextEditor
@@ -20,9 +9,10 @@ namespace TextEditor
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        
+        public string CurrentFilePath;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,12 +22,14 @@ namespace TextEditor
         {
             //MessageBox.Show("The open command has been invoked on target object.");
             Stream openFileStream = Stream.Null;
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                InitialDirectory = "C:\\",
+                Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
 
-            openFileDialog.InitialDirectory = "C:\\";
-            openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 2;
-            openFileDialog.RestoreDirectory = true;
 
             bool? userClickedOK = openFileDialog.ShowDialog();
 
@@ -51,6 +43,7 @@ namespace TextEditor
                         {
                             EditableTextBox.Text = File.ReadAllText(openFileDialog.FileName);
                         }
+                        CurrentFilePath = openFileDialog.FileName;
                     }
                 }
                 catch (Exception ex)
@@ -62,6 +55,48 @@ namespace TextEditor
         }
 
         private void OpenCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void SaveCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            //Check if file already exists
+            if (CurrentFilePath == null)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    FileName = "Document",
+                    DefaultExt = ".txt",
+                    Filter = "Text documents (.txt)|*.txt"
+                };
+
+                bool? userClickedOK = saveFileDialog.ShowDialog();
+
+                if (userClickedOK == true)
+                {
+                    CurrentFilePath = saveFileDialog.FileName;
+                    File.WriteAllText(CurrentFilePath, EditableTextBox.Text);
+                }
+            }
+            else
+            {
+                File.WriteAllText(CurrentFilePath, EditableTextBox.Text);
+            }
+        }
+
+        private void SaveCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void NewCmdExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CurrentFilePath = null;
+            EditableTextBox.Text = String.Empty;
+        }
+
+        private void NewCmdCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }
