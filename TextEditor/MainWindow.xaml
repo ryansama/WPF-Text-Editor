@@ -5,15 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TextEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600">
+        Title="Ryan's Text Editor" Height="400" Width="600">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open"
+                  Executed="OpenCmdExecuted"
+                  CanExecute="OpenCmdCanExecute"/>
+    </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="White">
-            <MenuItem Header="_New" />
-            <MenuItem Header="_Open" />
+            <MenuItem Header="_New"/>
+            <MenuItem Header="_Open" Command="ApplicationCommands.Open" />
             <MenuItem Header="_Save" />
         </Menu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <TextBox AcceptsReturn="True" FontFamily="Consolas" FontSize="15px"></TextBox>
+            <TextBox AcceptsReturn="True" FontFamily="Consolas" FontSize="15px" Name="EditableTextBox"></TextBox>
         </ScrollViewer>
         
     </DockPanel>
